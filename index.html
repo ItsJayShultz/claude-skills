@@ -46,7 +46,7 @@
 
   /* HERO */
   .hero {
-    padding: 64px 40px 48px calc(var(--sidebar-w) + 60px);
+    padding: 64px 40px 48px 40px;
     border-bottom: 1px solid var(--border);
     background: var(--bg);
   }
@@ -403,7 +403,57 @@
   .badge-caution { background: var(--warning-light); color: var(--warning); }
   .badge-danger { background: #fff0f0; color: #a32d2d; }
 
-  p { font-size: 14px; color: #333; line-height: 1.7; margin-bottom: 10px; }
+  @media (max-width: 700px) {
+    .hero {
+      padding: 36px 20px 32px;
+    }
+    .body-wrap {
+      flex-direction: column;
+    }
+    .sidebar {
+      position: static;
+      width: 100%;
+      height: auto;
+      border-right: none;
+      border-bottom: 1px solid var(--border);
+      padding: 16px 20px;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 4px;
+      overflow-x: auto;
+    }
+    .sidebar-label { display: none; }
+    .sidebar a {
+      padding: 5px 10px;
+      font-size: 11px;
+      border-right: none;
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      white-space: nowrap;
+    }
+    .sidebar a.active {
+      background: var(--accent-light);
+      border-color: var(--accent);
+    }
+    .sidebar a .num { display: none; }
+    .main {
+      padding: 0 20px 60px;
+    }
+    .two-col {
+      grid-template-columns: 1fr;
+    }
+    .stats-grid {
+      grid-template-columns: repeat(2, 1fr);
+    }
+    footer {
+      padding: 24px 20px 32px;
+      flex-direction: column;
+      gap: 4px;
+      text-align: center;
+    }
+    h1 { font-size: 28px; }
+    h2 { font-size: 20px; }
+  }
   p strong { font-weight: 700; color: var(--text); }
   p code, .step-list code {
     font-family: 'Space Mono', monospace;
@@ -415,7 +465,7 @@
   }
 
   footer {
-    padding: 24px 48px 32px calc(var(--sidebar-w) + 48px);
+    padding: 24px 48px 32px 48px;
     border-top: 1px solid var(--border);
     display: flex;
     justify-content: space-between;
