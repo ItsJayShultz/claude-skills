@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Complete Guide to Claude Code Skills</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Syne:wght@400;700;800&display=swap');
+
+  :root {
+    --bg: #faf8f5;
+    --surface: #f0ece5;
+    --card: #ffffff;
+    --border: #e0d9cf;
+    --border-strong: #c8bfb0;
+    --accent: #c4501a;
+    --accent-light: #fdf0eb;
+    --accent2: #1a6b3a;
+    --accent2-light: #edf7f1;
+    --warning: #7a4f00;
+    --warning-light: #fff8e6;
+    --warning-border: #f0c050;
+    --text: #1a1814;
+    --muted: #7a7168;
+    --code: #5b3db5;
+    --code-bg: #f0edfb;
+    --blue: #1a4f8a;
+    --blue-light: #edf3fb;
+    --sidebar-w: 220px;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Syne', sans-serif;
+    font-size: 15px;
+    line-height: 1.7;
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+  }
+
+  /* HERO */
+  .hero {
+    padding: 64px 40px 48px calc(var(--sidebar-w) + 60px);
+    border-bottom: 1px solid var(--border);
+    background: var(--bg);
+  }
+
+  .hero-tag {
+    display: inline-flex;
+    align-items: center;
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: var(--accent);
+    background: var(--accent-light);
+    border: 1px solid rgba(196,80,26,0.2);
+    padding: 4px 12px;
+    border-radius: 4px;
+    margin-bottom: 20px;
+  }
+
+  h1 {
+    font-size: clamp(28px, 4vw, 46px);
+    font-weight: 800;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    color: var(--text);
+    margin-bottom: 16px;
+  }
+
+  h1 em { font-style: normal; color: var(--accent); }
+
+  .hero-sub {
+    font-size: 16px;
+    color: var(--muted);
+    line-height: 1.6;
+    max-width: 500px;
+  }
+
+  /* BODY LAYOUT */
+  .body-wrap {
+    display: flex;
+    flex: 1;
+    position: relative;
+  }
+
+  /* SIDEBAR */
+  .sidebar {
+    width: var(--sidebar-w);
+    flex-shrink: 0;
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow-y: auto;
+    padding: 40px 0 40px 24px;
+    border-right: 1px solid var(--border);
+    background: var(--bg);
+  }
+
+  .sidebar-label {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--muted);
+    padding: 0 16px 12px 0;
+    margin-bottom: 4px;
+  }
+
+  .sidebar a {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 8px 16px 8px 0;
+    font-size: 13px;
+    font-weight: 700;
+    text-decoration: none;
+    color: var(--muted);
+    border-right: 2px solid transparent;
+    transition: color 0.15s, border-color 0.15s;
+    cursor: default;
+  }
+
+  .sidebar a:hover { color: var(--text); }
+
+  .sidebar a.active {
+    color: var(--accent);
+    border-right-color: var(--accent);
+  }
+
+  .sidebar a .num {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--border-strong);
+    min-width: 18px;
+  }
+
+  .sidebar a.active .num { color: var(--accent); }
+
+  /* MAIN CONTENT */
+  .main {
+    flex: 1;
+    padding: 0 48px 80px 48px;
+    min-width: 0;
+  }
+
+  section { padding: 56px 0 0; }
+
+  h2 {
+    font-size: 24px;
+    font-weight: 800;
+    letter-spacing: -0.01em;
+    color: var(--text);
+    margin-bottom: 6px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  h2 .section-num {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--accent);
+    background: var(--accent-light);
+    padding: 2px 7px;
+    border-radius: 3px;
+    letter-spacing: 0.08em;
+  }
+
+  .section-desc {
+    color: var(--muted);
+    font-size: 14px;
+    margin-bottom: 24px;
+    padding-bottom: 18px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  /* CARDS */
+  .card {
+    background: var(--card);
+    border: 1px solid var(--border);
+    border-radius: 12px;
+    padding: 20px 24px;
+    margin-bottom: 14px;
+  }
+
+  .card-title {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--muted);
+    margin-bottom: 14px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .card-title::before {
+    content: '';
+    display: block;
+    width: 7px; height: 7px;
+    border-radius: 50%;
+    background: var(--accent);
+    flex-shrink: 0;
+  }
+
+  .card-title.blue::before { background: var(--blue); }
+  .card-title.green::before { background: var(--accent2); }
+
+  .skill-list { list-style: none; }
+  .skill-list li {
+    display: flex;
+    gap: 12px;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--surface);
+    align-items: baseline;
+  }
+  .skill-list li:last-child { border-bottom: none; }
+  .skill-list code {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    background: var(--code-bg);
+    color: var(--code);
+    padding: 2px 7px;
+    border-radius: 4px;
+    white-space: nowrap;
+    flex-shrink: 0;
+  }
+  .skill-list .desc { font-size: 13px; color: #444; line-height: 1.5; }
+
+  .install-box {
+    background: #1a1814;
+    border-radius: 10px;
+    padding: 16px 20px;
+    margin: 16px 0;
+  }
+  .install-box .path {
+    font-family: 'Space Mono', monospace;
+    font-size: 12px;
+    color: #7ee787;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 5px 0;
+  }
+  .install-box .path .comment { color: #6e7681; }
+
+  .two-col {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 14px;
+    margin-bottom: 14px;
+  }
+
+  .warning-box {
+    background: var(--warning-light);
+    border: 1px solid var(--warning-border);
+    border-left: 4px solid #d4900a;
+    border-radius: 0 10px 10px 0;
+    padding: 18px 20px;
+    margin: 16px 0;
+  }
+  .warning-box .warning-title {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--warning);
+    margin-bottom: 6px;
+  }
+  .warning-box p { font-size: 13px; color: #5a3c00; line-height: 1.6; }
+
+  .danger-box {
+    background: #fff5f5;
+    border: 1px solid #fbb;
+    border-left: 4px solid #e24b4a;
+    border-radius: 0 10px 10px 0;
+    padding: 18px 20px;
+    margin: 16px 0;
+  }
+  .danger-box .danger-title {
+    font-size: 12px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: #a32d2d;
+    margin-bottom: 10px;
+  }
+  .danger-list { list-style: none; }
+  .danger-list li {
+    font-size: 13px;
+    color: #7a1f1f;
+    padding: 3px 0 3px 16px;
+    position: relative;
+  }
+  .danger-list li::before { content: '—'; position: absolute; left: 0; color: #e24b4a; }
+
+  .step-list { list-style: none; counter-reset: steps; }
+  .step-list li {
+    counter-increment: steps;
+    display: flex;
+    gap: 14px;
+    padding: 10px 0;
+    border-bottom: 1px solid var(--surface);
+    align-items: flex-start;
+    font-size: 13px;
+    color: #333;
+    line-height: 1.6;
+  }
+  .step-list li:last-child { border-bottom: none; }
+  .step-list li::before {
+    content: counter(steps);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-width: 24px; height: 24px;
+    border-radius: 50%;
+    background: var(--accent);
+    color: white;
+    font-size: 11px;
+    font-weight: 700;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+
+  .bullet-list { list-style: none; }
+  .bullet-list li {
+    font-size: 13px;
+    color: #333;
+    padding: 4px 0 4px 16px;
+    position: relative;
+    line-height: 1.6;
+  }
+  .bullet-list li::before { content: '→'; position: absolute; left: 0; color: var(--accent); font-weight: 700; }
+
+  .qref-table { width: 100%; border-collapse: collapse; }
+  .qref-table tr { border-bottom: 1px solid var(--border); }
+  .qref-table tr:last-child { border-bottom: none; }
+  .qref-table td { padding: 9px 10px; font-size: 13px; vertical-align: top; }
+  .qref-table td:first-child { color: var(--muted); white-space: nowrap; width: 42%; font-weight: 700; font-size: 12px; }
+  .qref-table td:last-child { color: #333; }
+
+  .stats-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+    gap: 10px;
+    margin: 16px 0;
+  }
+  .stat-card {
+    background: var(--surface);
+    border-radius: 10px;
+    padding: 14px 16px;
+    text-align: center;
+  }
+  .stat-num { font-size: 26px; font-weight: 800; color: var(--accent); line-height: 1.1; margin-bottom: 4px; }
+  .stat-label { font-size: 11px; color: var(--muted); font-weight: 700; letter-spacing: 0.04em; }
+
+  .collection-list { list-style: none; }
+  .collection-list li {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--surface);
+    font-size: 13px;
+  }
+  .collection-list li:last-child { border-bottom: none; }
+  .collection-list a { color: var(--blue); font-weight: 700; text-decoration: none; }
+  .collection-list a:hover { text-decoration: underline; }
+  .collection-list .count {
+    font-family: 'Space Mono', monospace;
+    font-size: 10px;
+    color: var(--muted);
+    background: var(--surface);
+    padding: 2px 7px;
+    border-radius: 4px;
+  }
+
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 2px 7px;
+    border-radius: 4px;
+    margin-left: 8px;
+    vertical-align: middle;
+  }
+  .badge-safe { background: var(--accent2-light); color: var(--accent2); }
+  .badge-caution { background: var(--warning-light); color: var(--warning); }
+  .badge-danger { background: #fff0f0; color: #a32d2d; }
+
+  p { font-size: 14px; color: #333; line-height: 1.7; margin-bottom: 10px; }
+  p strong { font-weight: 700; color: var(--text); }
+  p code, .step-list code {
+    font-family: 'Space Mono', monospace;
+    font-size: 11px;
+    background: var(--code-bg);
+    color: var(--code);
+    padding: 1px 5px;
+    border-radius: 3px;
+  }
+
+  footer {
+    padding: 24px 48px 32px calc(var(--sidebar-w) + 48px);
+    border-top: 1px solid var(--border);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-size: 11px;
+    color: var(--muted);
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  footer a { color: var(--blue); text-decoration: none; }
+  footer a:hover { text-decoration: underline; }
+</style>
+</head>
+<body>
+
+<div class="hero">
+  <div class="hero-tag">Claude Code · Complete Guide</div>
+  <h1>The Complete Guide to<br><em>Claude Code Skills</em></h1>
+  <p class="hero-sub">Everything you need to know about Claude Code's skill system. What to install, what to avoid, and how to build your own.</p>
+  <div style="display:inline-flex;align-items:center;gap:12px;margin-top:28px;padding:12px 20px;background:#fff;border:1px solid var(--border);border-radius:40px;">
+    <div style="width:38px;height:38px;border-radius:50%;background:linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888);display:flex;align-items:center;justify-content:center;flex-shrink:0;"><svg width="18" height="18" viewBox="0 0 24 24" fill="white" xmlns="http://www.w3.org/2000/svg"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg></div>
+    <div>
+      <div style="font-size:14px;font-weight:700;color:var(--text);line-height:1.3;">@itsjayshultz</div>
+      <div style="font-size:12px;color:var(--muted);line-height:1.3;">drop a follow on instagram, I beg you...</div>
+    </div>
+    <a href="https://instagram.com/itsjayshultz" target="_blank" style="font-size:12px;font-weight:700;color:white;background:var(--accent);padding:7px 16px;border-radius:20px;text-decoration:none;white-space:nowrap;margin-left:4px;">Follow</a>
+  </div>
+</div>
+
+<div class="body-wrap">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-label">Contents</div>
+    <a href="#what-are-skills" class="active"><span class="num">01</span>What are skills?</a>
+    <a href="#official"><span class="num">02</span>Official skills</a>
+    <a href="#community"><span class="num">03</span>Community</a>
+    <a href="#security"><span class="num">04</span>Security</a>
+    <a href="#build-your-own"><span class="num">05</span>Build your own</a>
+    <a href="#quick-ref"><span class="num">06</span>Quick reference</a>
+    <a href="#ecosystem"><span class="num">07</span>Ecosystem</a>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main">
+
+    <section id="what-are-skills">
+      <h2><span class="section-num">01</span> What Are Skills?</h2>
+      <p class="section-desc">Skills are like apps for your AI. You install one and Claude learns a brand new ability.</p>
+      <p>They work by giving Claude a detailed playbook (a <code>SKILL.md</code> file) with step-by-step instructions. When you need that ability, Claude follows the playbook automatically.</p>
+      <div class="card" style="margin-top: 20px;">
+        <div class="card-title">How to install a skill</div>
+        <p style="font-size:13px; margin-bottom: 12px;">Drop a folder with a <code>SKILL.md</code> file into one of these locations:</p>
+        <div class="install-box">
+          <div class="path"><span>~/.claude/skills/skill-name/</span><span class="comment">// all your projects</span></div>
+          <div class="path"><span>.claude/skills/skill-name/</span><span class="comment">// one project only</span></div>
+        </div>
+        <p style="font-size:13px; color: var(--muted); margin:0;">No downloads. No package managers. Just one file.</p>
+      </div>
+      <div class="card">
+        <div class="card-title blue">How to use a skill</div>
+        <p style="font-size:13px; margin:0;">Type <code>/skill-name</code> in Claude Code, or just describe what you want — Claude picks the right skill automatically.</p>
+      </div>
+    </section>
+
+    <section id="official">
+      <h2><span class="section-num">02</span> Official Skills <span class="badge badge-safe">100% Safe · Free</span></h2>
+      <p class="section-desc">Built and verified by Anthropic. Install with confidence.</p>
+      <div class="card">
+        <div class="card-title">Bundled Skills — Pre-installed</div>
+        <ul class="skill-list">
+          <li><code>/simplify</code><span class="desc">Reviews your recent code changes for quality, reuse, and efficiency. Spawns 3 review agents in parallel and auto-fixes problems.</span></li>
+          <li><code>/batch</code><span class="desc">Makes large-scale changes across your entire codebase in parallel. Breaks work into 5–30 units, each running in isolation.</span></li>
+          <li><code>/debug</code><span class="desc">Troubleshoots your current Claude Code session by reading debug logs. Describe the issue and it investigates.</span></li>
+          <li><code>Developer Platform</code><span class="desc">Auto-activates when your code uses the Anthropic SDK. No manual setup needed.</span></li>
+        </ul>
+      </div>
+      <div class="two-col">
+        <div class="card">
+          <div class="card-title">Document Creation</div>
+          <ul class="skill-list">
+            <li><code>docx</code><span class="desc">Creates and edits Word documents</span></li>
+            <li><code>pdf</code><span class="desc">Creates PDF files</span></li>
+            <li><code>pptx</code><span class="desc">Creates PowerPoint presentations</span></li>
+            <li><code>xlsx</code><span class="desc">Creates Excel spreadsheets</span></li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="card-title blue">Design & Development</div>
+          <ul class="skill-list">
+            <li><code>frontend-design</code><span class="desc">Builds polished, production-grade web interfaces with a full design system</span></li>
+            <li><code>web-artifacts-builder</code><span class="desc">Creates self-contained web applications from descriptions</span></li>
+          </ul>
+        </div>
+      </div>
+    </section>
+
+    <section id="community">
+      <h2><span class="section-num">03</span> Community Skills <span class="badge badge-caution">Review before install</span></h2>
+      <p class="section-desc">Curated and verified picks. Always review the SKILL.md file before installing anything from the community.</p>
+      <div class="two-col">
+        <div class="card">
+          <div class="card-title">Code Quality</div>
+          <ul class="skill-list">
+            <li><code>Code Reviewer</code><span class="desc">Automated code review with detailed feedback</span></li>
+            <li><code>Test Generator</code><span class="desc">Generates test suites for your code</span></li>
+            <li><code>Git Automation</code><span class="desc">Automates git workflows (commits, PRs, branching)</span></li>
+          </ul>
+        </div>
+        <div class="card">
+          <div class="card-title blue">Productivity</div>
+          <ul class="skill-list">
+            <li><code>Session Logger</code><span class="desc">Logs all activity in a session for review</span></li>
+            <li><code>Codebase Visualizer</code><span class="desc">Generates an interactive HTML tree of your project</span></li>
+            <li><code>PR Summary</code><span class="desc">Summarizes pull requests with live GitHub data</span></li>
+          </ul>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-title green">Curated Collections</div>
+        <ul class="collection-list">
+          <li><a href="https://github.com/travisvn/awesome-claude-skills" target="_blank">awesome-claude-skills (travisvn)</a><span class="count">50+ skills</span></li>
+          <li><a href="https://github.com/BehiSecc/awesome-claude-skills" target="_blank">awesome-claude-skills (BehiSecc)</a><span class="count">40+ skills</span></li>
+          <li><a href="https://github.com/anthropics/claude-code-skills" target="_blank">Anthropic Official</a><span class="count">10+ skills</span></li>
+          <li><a href="https://skillsmp.com" target="_blank">SkillsMP Marketplace</a><span class="count">270,000+ (use with caution)</span></li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="security">
+      <h2><span class="section-num">04</span> Security Warning <span class="badge badge-danger">Read This</span></h2>
+      <p class="section-desc">Snyk's ToxicSkills research (February 2026) scanned 3,984 community skills and found serious risks.</p>
+      <div class="stats-grid">
+        <div class="stat-card"><div class="stat-num">36%</div><div class="stat-label">Prompt injection attacks</div></div>
+        <div class="stat-card"><div class="stat-num">1,467</div><div class="stat-label">Malicious payloads found</div></div>
+        <div class="stat-card"><div class="stat-num">91%</div><div class="stat-label">Combined prompt + malware</div></div>
+        <div class="stat-card"><div class="stat-num">13%</div><div class="stat-label">Critical flaw chance</div></div>
+      </div>
+      <div class="danger-box">
+        <div class="danger-title">What malicious skills can do</div>
+        <ul class="danger-list">
+          <li>Steal your API keys and passwords</li>
+          <li>Read your private files and send them to attackers</li>
+          <li>Run hidden commands on your computer</li>
+          <li>Inject instructions that make Claude do things you didn't ask for</li>
+        </ul>
+      </div>
+      <div class="card">
+        <div class="card-title green">How to stay safe</div>
+        <ol class="step-list">
+          <li>Stick to official skills first. Anthropic's bundled and official skills are verified safe.</li>
+          <li>Only install from trusted sources. Check GitHub stars, forks, and recent activity.</li>
+          <li>Read the SKILL.md file before installing. It's just a text file. Look for anything suspicious.</li>
+          <li>Never install skills from random links. If someone shares a "cool skill" in Discord or a comment section, verify it yourself first.</li>
+          <li>Check the <code>allowed-tools</code> field. If a skill requests <code>Bash(*)</code>, that's a red flag unless you trust the source.</li>
+        </ol>
+      </div>
+    </section>
+
+    <section id="build-your-own">
+      <h2><span class="section-num">05</span> Build Your Own Skill</h2>
+      <p class="section-desc">You don't need to be a developer. A skill is just a text file with instructions.</p>
+      <div class="card">
+        <div class="card-title">Three steps to create a skill</div>
+        <ol class="step-list">
+          <li><strong>Create the folder</strong><br><code>mkdir -p ~/.claude/skills/my-skill</code></li>
+          <li><strong>Write the SKILL.md file</strong> with a name, description, and step-by-step instructions.</li>
+          <li><strong>Type <code>/my-skill</code></strong> in Claude Code. That's it.</li>
+        </ol>
+      </div>
+      <div class="card">
+        <div class="card-title blue">Skill Tips</div>
+        <ul class="bullet-list">
+          <li>Keep instructions clear and specific. Write them like you're training a new employee.</li>
+          <li>Add <code>disable-model-invocation: true</code> if you only want to trigger it manually.</li>
+          <li>Use <code>$ARGUMENTS</code> to pass in dynamic values.</li>
+          <li>Add supporting files (templates, examples, scripts) in the same folder.</li>
+        </ul>
+      </div>
+    </section>
+
+    <section id="quick-ref">
+      <h2><span class="section-num">06</span> Quick Reference</h2>
+      <p class="section-desc">Everything in one place.</p>
+      <div class="card">
+        <table class="qref-table">
+          <tr><td>See all available skills</td><td>Ask "What skills are available?"</td></tr>
+          <tr><td>Install an official skill</td><td>Already installed with Claude Code</td></tr>
+          <tr><td>Install a community skill</td><td>Drop the folder in <code>~/.claude/skills/</code></td></tr>
+          <tr><td>Create your own skill</td><td>Make a folder with a <code>SKILL.md</code> file</td></tr>
+          <tr><td>Use a skill</td><td>Type <code>/skill-name</code> or describe what you need</td></tr>
+          <tr><td>Check skill safety</td><td>Read the <code>SKILL.md</code> file before installing</td></tr>
+        </table>
+      </div>
+    </section>
+
+    <section id="ecosystem">
+      <h2><span class="section-num">07</span> Ecosystem at a Glance</h2>
+      <p class="section-desc">The scale of what's available.</p>
+      <div class="stats-grid">
+        <div class="stat-card"><div class="stat-num">4</div><div class="stat-label">Official bundled skills</div></div>
+        <div class="stat-card"><div class="stat-num">10+</div><div class="stat-label">Official Anthropic skills</div></div>
+        <div class="stat-card"><div class="stat-num">90+</div><div class="stat-label">Curated community skills</div></div>
+        <div class="stat-card"><div class="stat-num">270k+</div><div class="stat-label">SkillsMP marketplace</div></div>
+      </div>
+    </section>
+
+  </main>
+</div>
+
+<footer>
+  <span>Compiled by @itsjayshultz · Last updated: March 2026</span>
+  <span>Sources: <a href="https://docs.anthropic.com/en/docs/claude-code/skills" target="_blank">Anthropic docs</a> · <a href="https://snyk.io/research/toxicskills" target="_blank">Snyk ToxicSkills</a> · <a href="https://skillsmp.com" target="_blank">SkillsMP</a> · <a href="https://github.com/anthropics/claude-code-skills" target="_blank">GitHub</a></span>
+</footer>
+
+<script>
+  const sidebarLinks = document.querySelectorAll('.sidebar a');
+
+  sidebarLinks.forEach(link => {
+    link.addEventListener('click', function(e) {
+      e.preventDefault();
+    });
+  });
+
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        sidebarLinks.forEach(a => a.classList.remove('active'));
+        const active = document.querySelector(`.sidebar a[href="#${entry.target.id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-10% 0px -80% 0px' });
+
+  document.querySelectorAll('section[id]').forEach(s => observer.observe(s));
+</script>
+
+</body>
+</html>
